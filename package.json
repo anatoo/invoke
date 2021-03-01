@@ -5,7 +5,7 @@
   "author": "Kubota Mitsunori <anatoo.jp@gmail.com>",
   "license": "MIT",
   "bin": {
-    "invoke": "scripts/cli.js"
+    "invoke": "./scripts/cli.js"
   },
   "scripts": {
     "prepublish": "npm run build",
