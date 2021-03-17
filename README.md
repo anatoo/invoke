@@ -1,6 +1,6 @@
 # `@anatoo/invoke`
 
-[![npm version](https://badge.fury.io/js/@anatoo/invoke.svg)](https://badge.fury.io/js/@anatoo/invoke)
+[![npm version](https://badge.fury.io/js/%40anatoo%2Finvoke.svg)](https://badge.fury.io/js/%40anatoo%2Finvoke)
 
 Call the function exported by the module from the CLI.
 
