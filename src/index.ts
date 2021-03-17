@@ -3,10 +3,14 @@ const {inspect} = require('util');
 const {program} = require('commander');
 const {version} = require('../package.json');
 
-export function invoke(target: string, name?: string, args: any[] = []) {
+function requireModule(target: string) {
   const cwd = process.cwd();
   const requirePath = target.substr(0, 1) === '.' ? path.join(cwd, target) : target;
-  const module = require(requirePath);
+  return require(requirePath);
+}
+
+export function invoke(target: string, name?: string, args: any[] = []) {
+  const module = requireModule(target);
 
   if (typeof name === 'string') {
     if (!(name in module)) {
@@ -28,6 +32,16 @@ export function invoke(target: string, name?: string, args: any[] = []) {
   }
 }
 
+function list(target: string) {
+  const module = requireModule(target);
+  console.log(`Exported function names in ${inspect(target)}:`);
+  for (const [name, value] of Object.entries(module)) {
+    if (typeof value === 'function') {
+      console.log(`  ${name}`);
+    }
+  }
+}
+
 const helpText = `
 Example:
   $ invoke "./path/to/module.js"                  Invoke default exported function.
@@ -44,12 +58,17 @@ export function cli() {
       module: 'Path to module. Example: "./foobar.js"',
       name: 'Exported function name. Not required for default exported function.'
     })
-    .action((module?: string, name?: string) => {
-      if (typeof module !== 'string') {
+    .action((target?: string, name?: string, options?: {list: boolean}) => {
+      if (typeof target !== 'string') {
         program.help({error: true});
         return;
       }
-      invoke(module, name);
+
+      if (options?.list) {
+        list(target);
+      } else {
+        invoke(target, name);
+      }
     })
     .addHelpText('after', helpText);
   program.parse(process.argv);
