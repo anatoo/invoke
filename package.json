@@ -3,6 +3,10 @@
   "version": "0.0.0",
   "main": "dist/index.js",
   "author": "Kubota Mitsunori <anatoo.jp@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anatoo/invoke.git"
+  },
   "license": "MIT",
   "bin": {
     "invoke": "./scripts/cli.js"
